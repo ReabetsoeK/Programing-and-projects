@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Sales_Commision
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            decimal rev, com = 0, Commission;
+
+            if (decimal.TryParse(txtRevenue.Text, out rev) && decimal.TryParse(txtCommission.Text, out com))
+     
+            {
+                Commission = CalculateCommission(rev, com);
+                lblOutput.Text = "The salesman commission is: " + Commission.ToString("C");
+            }
+            else
+                MessageBox.Show("Invalid input!");
+
+        }
+        private decimal CalculateCommission(decimal revenue, decimal commRate)
+        {
+            decimal commission = revenue * commRate / 100;
+            return commission;
+        }
+    }
+
+}
