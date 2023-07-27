@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsForm_Multiple
+{
+    public partial class Form1 : Form
+    {
+        decimal[] arrDorm = { 1500, 1600, 1800, 2500 };
+        decimal[] arrFood = { 600, 1200, 1700 };
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            listDorm.Items.Add("Allen Hsll\t\t$1,500");
+            listDorm.Items.Add("Pike Hall \t\t$1,600");
+            listDorm.Items.Add("Farthinf Hall\t$1000");
+            listDorm.Items.Add("University Suits\t$2,500");
+
+            listFood.Items.Add("7 meals per week\t$600");
+            listFood.Items.Add("14 meals per week\t$1,200");
+            listFood.Items.Add("Unlimited meals\t$1,700");
+        }
+
+        private void btnCalc_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (listDorm.SelectedIndex != -1 && listFood.SelectedIndex != -1)
+                {
+                    decimal total = arrDorm[listDorm.SelectedIndex] + arrFood[listFood.SelectedIndex];
+
+                    Form2 form = new Form2();
+
+                    form.lblOutput.Text = total.ToString("C");
+
+                    form.ShowDialog();
+
+                    listDorm.SelectedItems.Clear();
+                    listFood.SelectedItems.Clear();
+                }
+                else
+                    MessageBox.Show("Please make a slection from both list boxes!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+    }
+
+}
