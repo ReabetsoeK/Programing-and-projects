@@ -1,0 +1,109 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+
+namespace Assignment_7_5
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        string[] team;
+        string[] winner;
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            readTeams();
+            readWinner();
+        }
+
+        private void readTeams()
+        {
+            try
+            {
+                int numLines = 0;
+                StreamReader inputFile;
+                inputFile = File.OpenText("Teams.txt");
+
+                while (!inputFile.EndOfStream)
+                {
+                    listBoxDisplay.Items.Add(inputFile.ReadLine());
+                    numLines++;
+                }
+
+                team = new string[numLines];
+
+                inputFile = File.OpenText("Teams.txt");
+                int index = 0;
+                while (index < team.Length && !inputFile.EndOfStream)
+                {
+                    team[index] = inputFile.ReadLine();
+                    index++;
+                }
+
+                inputFile.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void readWinner()
+        {
+            try
+            {
+                int numLines = 0;
+                StreamReader inputFile;
+                inputFile = File.OpenText("WorldSeries.txt");
+
+                while (!inputFile.EndOfStream)
+                {
+                    inputFile.ReadLine();
+                    numLines++;
+                }
+
+                winner = new string[numLines];
+
+                inputFile = File.OpenText("WorldSeries.txt");
+                int index = 0;
+
+                while (index < winner.Length && !inputFile.EndOfStream)
+                {
+                    winner[index] = inputFile.ReadLine();
+                    index++;
+                }
+
+                inputFile.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void listBoxDisplay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string sTeam = listBoxDisplay.SelectedItem.ToString();
+            int iTotalWins = 0;
+
+            for (int i = 0; i < winner.Length; i++)
+            {
+                if (sTeam == winner[i])
+                {
+                    iTotalWins++;
+                }
+            }
+            lblTotalWins.Text = sTeam + " has won " + iTotalWins.ToString() + " times from 1903 through 2012";
+        }
+    }
+}
